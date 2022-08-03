@@ -13,7 +13,7 @@ ConditionPathExists=/etc/peervpn/%i.conf
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/peervpn /etc/peervpn/%i.conf
+ExecStart=/usr/local/bin/peervpn /etc/peervpn/%i.conf
 Restart=on-failure
 
 [Install]
