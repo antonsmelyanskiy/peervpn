@@ -17,7 +17,7 @@ jobs:
       run: sudo apt-get install -y build-essential libssl-dev debhelper
       
     - name: Make Deb Package
-      run: dpkg-buildpackage -rfakeroot --no-sign
+      run: dpkg-buildpackage -rfakeroot --no-sign && mv ../peervpn*.deb . && pwd && ls -la
 
     - name: Upload resulting deb package
       uses: actions/upload-artifact@v3
