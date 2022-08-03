@@ -1,0 +1,25 @@
+name: Deb package for Ubuntu Bionic
+
+on:
+  push:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-bionic
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install dependencies
+      run: apt-get install build-essential git libssl-dev debhelper
+      
+    - name: Make Deb Package
+      run: dpkg-buildpackage -rfakeroot & ls -la
+
+    - name: Upload resulting deb package
+      uses: actions/upload-artifact@v3
+      with:
+        name: PeerVPN-UbuntuBionic.deb
+        path: output/test/code-coverage.html
