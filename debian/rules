@@ -1,5 +1,7 @@
 #!/usr/bin/make -f
 export QT_SELECT := qt5
 
+override_dh_usrlocal:
+
 %:
 	dh $@
