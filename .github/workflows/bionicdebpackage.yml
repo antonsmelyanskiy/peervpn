@@ -13,14 +13,20 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Install dependencies
+    - name: Install build dependencies
       run: sudo apt-get install -y build-essential libssl-dev debhelper
       
     - name: Make Deb Package
-      run: dpkg-buildpackage -rfakeroot --no-sign && mv ../peervpn*.deb . && pwd && ls -la
+      run: dpkg-buildpackage -rfakeroot --no-sign && mv ../peervpn*.deb .
 
     - name: Upload resulting deb package
       uses: actions/upload-artifact@v3
       with:
         name: peervpn_bionic_amd64.deb
         path: peervpn*.deb
+
+    - name: Install deb package
+      run: mkdir deployment && mv ./peervpn*.deb ./deployment && "yes | sudo dpkg -i -R ./deployment"
+
+    - name: Verify binary existence at /usr/local/bin/peervpn
+      run: ls -la /usr/local/bin/peervpn
