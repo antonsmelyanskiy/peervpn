@@ -22,5 +22,5 @@ jobs:
     - name: Upload resulting deb package
       uses: actions/upload-artifact@v3
       with:
-        name: peervpn_0-044_amd64.deb
-        path: ../*.deb
+        name: peervpn_bionic_amd64.deb
+        path: peervpn*.deb
