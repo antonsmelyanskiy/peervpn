@@ -26,7 +26,7 @@ jobs:
         path: peervpn*.deb
 
     - name: Install deb package
-      run: mkdir deployment && mv ./peervpn*.deb ./deployment && sudo dpkg -i -R ./deployment"
+      run: mkdir deployment && mv ./peervpn*.deb ./deployment && sudo dpkg -i -R ./deployment
 
     - name: Verify binary existence at /usr/local/bin/peervpn
       run: ls -la /usr/local/bin/peervpn
