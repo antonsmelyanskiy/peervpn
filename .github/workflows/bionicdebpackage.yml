@@ -3,6 +3,12 @@ name: Deb package for Ubuntu Bionic
 on:
   push:
     branches: [ $default-branch ]
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Manual run'
+        required: false
+        type: boolean
 
 jobs:
   build:
