@@ -22,13 +22,13 @@ jobs:
       run: sudo apt-get install -y build-essential libssl-dev debhelper devscripts dpkg-dev
       
     - name: Make Deb Package
-      run: dch -v "${{ inputs.base_version }}.${{ github.run_number }}" "Ubuntu package build" && dpkg-buildpackage -rfakeroot --no-sign && mkdir -p deployment/contrib && mv ../peervpn*.deb ./deployment/contrib
+      run: dch -v "${{ inputs.base_version }}.${{ github.run_number }}" "Ubuntu package build" && dpkg-buildpackage -rfakeroot --no-sign && mkdir -p deployment/bionic/main && mv ../peervpn*.deb ./deployment/bionic/main
 
     - name: Upload resulting deb package
       uses: actions/upload-artifact@v3
       with:
-        name: peervpn_bionic_amd64_${{ inputs.base_version }}.${{ github.run_number }}.deb
-        path: deployment/contrib/peervpn*.deb
+        name: peervpn_bionic_amd64_${{ inputs.base_version }}.${{ github.run_number }}.deb.zip
+        path: deployment/bionic/main/peervpn*.deb
 
     - name: Create custom apt repo
       run:  dpkg-scanpackages ./deployment > ./deployment/Packages && gzip ./deployment/Packages
@@ -37,7 +37,7 @@ jobs:
       run:  sudo python3 -m http.server 80 --directory ./deployment/ &
 
     - name: Add custom apt repo to local apt sources
-      run:  echo "deb [trusted=yes] http://127.0.0.1 contrib" > ./peervpn.list && sudo cp ./peervpn.list /etc/apt/sources.list.d
+      run:  echo "deb [trusted=yes] http://127.0.0.1 bionic main" > ./peervpn.list && sudo cp ./peervpn.list /etc/apt/sources.list.d
 
     - name: Install deb package
       run:  sudo apt-get update && sudo apt-get install -y peervpn
