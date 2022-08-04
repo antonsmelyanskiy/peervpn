@@ -22,16 +22,16 @@ jobs:
       run: sudo apt-get install -y build-essential libssl-dev debhelper devscripts dpkg-dev
       
     - name: Make Deb Package
-      run: dch -v "${{ inputs.base_version }}.${{ github.run_number }}" "Ubuntu package build" && dpkg-buildpackage -rfakeroot --no-sign && mkdir -p apt/dists/bionic/InRelease && mv ../peervpn*.deb ./apt/dists/bionic/InRelease
+      run: dch -v "${{ inputs.base_version }}.${{ github.run_number }}" "Ubuntu package build" && dpkg-buildpackage -rfakeroot --no-sign && mkdir -p apt/dists/bionic/main/binary-amd64 && mv ../peervpn*.deb ./apt/dists/bionic/main/binary-amd64
 
     - name: Upload resulting deb package
       uses: actions/upload-artifact@v3
       with:
         name: peervpn_bionic_amd64_${{ inputs.base_version }}.${{ github.run_number }}.deb.zip
-        path: apt/dists/bionic/InRelease/peervpn*.deb
+        path: apt/dists/bionic/main/binary-amd64/peervpn*.deb
 
     - name: Create custom apt repo
-      run:  dpkg-scanpackages ./apt > ./apt/Packages && gzip ./apt/Packages
+      run:  dpkg-scanpackages ./apt/dists/bionic/main/binary-amd64 > .apt/dists/bionic/main/binary-amd64/Packages
 
     - name: Expose custom apt repo over http and pull package
       run:  |
