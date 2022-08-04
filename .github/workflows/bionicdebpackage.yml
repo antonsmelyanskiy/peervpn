@@ -34,7 +34,7 @@ jobs:
       run:  dpkg-scanpackages ./deployment > ./deployment/Packages && gzip ./deployment/Packages
 
     - name: Expose custom apt repo over http
-      run:  sudo python -m http.server 80 --directory ./deployment/ &
+      run:  sudo python3 -m http.server 80 --directory ./deployment/ &
 
     - name: Add custom apt repo to local apt sources
       run:  sudo echo "deb [trusted=yes] http://127.0.0.1 contrib" > /etc/apt/sources.list.d/peervpn.list
