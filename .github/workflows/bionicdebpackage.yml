@@ -37,7 +37,7 @@ jobs:
       run:  sudo python3 -m http.server 80 --directory ./deployment/ &
 
     - name: Add custom apt repo to local apt sources
-      run:  sudo echo "deb [trusted=yes] http://127.0.0.1 contrib" > /etc/apt/sources.list.d/peervpn.list
+      run:  echo "deb [trusted=yes] http://127.0.0.1 contrib" > ./peervpn.list && sudo cp ./peervpn.list /etc/apt/sources.list.d
 
     - name: Install deb package
       run:  sudo apt-get update && sudo apt-get install -y peervpn
