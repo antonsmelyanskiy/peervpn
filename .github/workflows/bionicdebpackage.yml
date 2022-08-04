@@ -31,7 +31,7 @@ jobs:
         path: apt/dists/bionic/main/binary-amd64/peervpn*.deb
 
     - name: Create custom apt repo
-      run:  dpkg-scanpackages ./apt/dists/bionic/main/binary-amd64 > ./apt/dists/bionic/main/binary-amd64/Packages
+      run:  cd ./apt && dpkg-scanpackages dists/bionic/main/binary-amd64 > ./dists/bionic/main/binary-amd64/Packages
 
     - name: Expose custom apt repo over http and pull package
       run:  |
