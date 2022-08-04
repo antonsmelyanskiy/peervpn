@@ -22,7 +22,7 @@ jobs:
       run: sudo apt-get install -y build-essential libssl-dev debhelper devscripts dpkg-dev
       
     - name: Make Deb Package
-      run: dch -v "${{ inputs.base_version }}.${{ github.run_number }}" "Ubuntu package build" && dpkg-buildpackage -rfakeroot --no-sign && mkdir deployment/contrib && mv ../peervpn*.deb ./deployment/contrib
+      run: dch -v "${{ inputs.base_version }}.${{ github.run_number }}" "Ubuntu package build" && dpkg-buildpackage -rfakeroot --no-sign && mkdir -p deployment/contrib && mv ../peervpn*.deb ./deployment/contrib
 
     - name: Upload resulting deb package
       uses: actions/upload-artifact@v3
